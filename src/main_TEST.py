@@ -191,7 +191,11 @@ def ConvolucionBW(Parametro):
 
     #Se crea la matriz kernel
     #Kernel = np.array([[0,-1,0],[-1,5,-1],[0,-1,0]]) #Enfocado/Sharpen
+<<<<<<< HEAD
     Kernel = np.array([[-1,-1,-1],[-1,-1,-1],[-1,-1,-1]]) #Deteccion de Bordes
+=======
+    Kernel = np.array([[-1,-1,-1],[-1,8,-1],[-1,-1,-1]]) #Deteccion de Bordes
+>>>>>>> 35bd47817594a1142132fbd29b4b82a64ec0c873
     
     print '\n(i) - Cargando...'
     for y in range(height):
