@@ -36,11 +36,11 @@ try:
         images = Rugosidad()        
         titles = ['Filtro Gaussiano','Histograma',"Umbral Otsu"]        
 
-        plt.subplot(3,3,1),plt.imshow(images[0],'gray')
+        plt.subplot(1,3,1),plt.imshow(images[0],'gray')
         plt.title(titles[0]), plt.xticks([]), plt.yticks([])
-        plt.subplot(3,3,2),plt.hist(images[0].ravel(),256)
+        plt.subplot(1,3,2),plt.hist(images[0].ravel(), 256)
         plt.title(titles[1]), plt.xticks([]), plt.yticks([])
-        plt.subplot(3,3,3),plt.imshow(images[1],'gray')
+        plt.subplot(1,3,3),plt.imshow(images[1],'gray')
         plt.title(titles[2]), plt.xticks([]), plt.yticks([])
         plt.show() 
         # Guardar()
