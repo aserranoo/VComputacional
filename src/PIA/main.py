@@ -52,6 +52,7 @@ try:
                 count+=1
         for i in range(1, len(hists)):
             res.append(cv2.compareHist(hists[0], hists[i], cv2.HISTCMP_BHATTACHARYYA))
+        
         # titles = ['Filtro Bilateral','Histograma',"Umbral Otsu"]            
         # for i in range(0, len(images)):            
         #     plt.subplot(1,3,1),plt.imshow(images[0],'gray')
