@@ -56,14 +56,14 @@ try:
         rug2 = round((bordes2 * 100) / total)
         print rug
         print rug2
-        rugosidadfinal = rug2
-        tiporugosidad =  " "        
-        if rugosidadfinal < 58:
-          	tiporugosidad = 'NO es una imagen rugosa'        
+        rugosidadfinal = rug
+        tiporugosidad =  " "
+        if rugosidadfinal < 30:
+          	tiporugosidad = 'NO es una imagen rugosa'
         else:
-            tiporugosidad = 'SI es una imagen rugosa'        	
+            tiporugosidad = 'SI es una imagen rugosa'
         plt.subplot(2,4,1),plt.imshow(images[0],cmap = 'gray')
-        plt.title('Imagen Original'), plt.xticks([]), plt.yticks([])        
+        plt.title('Imagen Original'), plt.xticks([]), plt.yticks([])
         plt.subplot(2,4,2), plt.hist(images[0].ravel(),256)
         plt.title('Histogramas')   , plt.xticks([], plt.yticks([]))
         plt.subplot(2,4,3),plt.imshow(edges,cmap = 'gray')
