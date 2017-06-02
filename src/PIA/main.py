@@ -9,10 +9,13 @@ from matplotlib import pyplot as plt
 
 
 def Rugosidad():
-    images = []
-    for item in Org_img:        
-        blur = cv2.medianBlur(item,5)
-        ret, otsu = cv2.threshold(blur,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
+    images = []  
+    # gray = []  
+    for item in Org_img:
+        # gray = cv2.cvtColor(item, cv2.COLOR_BGR2GRAY)
+        blur = cv2.medianBlur(item,1)
+        # blur = cv2.GaussianBlur(item,(5,5),.1)
+        ret, otsu = cv2.threshold(blur,0,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)
         images = [blur, otsu]
     return images  
 #Inicia programa
@@ -29,35 +32,46 @@ try:
     Org_img = []
     count = 0    
     for item in ruta:
-        Org_img.append(cv2.imread(item, 0))
+        Org_img.append(cv2.imread(item,0))
     try:
         bordes = 0
+        bordes2 = 0
         rug = 0
+        rug2= 0
         total = 0
-        images = Rugosidad()                            
-        titles = ['Filtro Mediana','Histograma',"Umbral Otsu"]
-        
-        edges = cv2.Canny(images[1],600,50)
-        prop = edges.shape
+        images = Rugosidad()
+        titles = ['Filtro Mediana','Histograma',"Umbral Otsu"]        
+        edges = cv2.Canny(images[1],10,200)
+        prop = images[1].shape
         height = prop[0]
         width = prop[1]
-        for y in range(height):
-            total +=  1
+        for y in range(height):            
             for x in range(width):
                 total +=  1
-                if edges[y,x] > 0:                    
-                    bordes += 1             
-        rug =  total/bordes
+                if images[1][y,x] > 0:
+                    bordes += 1
+                if images[1][y,x] == 0:
+                    bordes2 += 1
+        rug = round((bordes * 100) / total)
+        rug2 = round((bordes2 * 100) / total)
+        print rug
+        print rug2
+        rugosidadfinal = rug2
+        tiporugosidad =  " "        
+        if rugosidadfinal < 58:
+          	tiporugosidad = 'NO es una imagen rugosa'        
+        else:
+            tiporugosidad = 'SI es una imagen rugosa'        	
         plt.subplot(2,4,1),plt.imshow(images[0],cmap = 'gray')
         plt.title('Imagen Original'), plt.xticks([]), plt.yticks([])        
         plt.subplot(2,4,2), plt.hist(images[0].ravel(),256)
-        plt.title('Histogramas'), plt.xticks([], plt.yticks([]))
+        plt.title('Histogramas')   , plt.xticks([], plt.yticks([]))
         plt.subplot(2,4,3),plt.imshow(edges,cmap = 'gray')
         plt.title('Bordes'), plt.xticks([]), plt.yticks([])
         plt.subplot(2,4,4),plt.imshow(images[1],cmap = 'gray')
         plt.title('Umbral'), plt.xticks([]), plt.yticks([])              
         plt.subplot(2,4,5), plt.axis('off')
-        plt.title('Rugosidad = ' + str(100-rug) + '\n'), plt.xticks([]), plt.yticks([]), plt.axis('off')   
+        plt.title('Rugosidad = ' + str(rugosidadfinal) + '\n' + 'Tipo de rugosidad = ' + str(tiporugosidad)), plt.xticks([]), plt.yticks([]), plt.axis('off')
         plt.show()        
     except Exception as e:
         print e
@@ -69,4 +83,3 @@ except:
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
-
